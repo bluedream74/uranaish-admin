@@ -25,7 +25,7 @@ export default function Login() {
 
     const formData = new FormData(event.currentTarget);
     const user:UserType = {
-      email: formData.get("username") as string,
+      email: formData.get("email") as string,
       password: formData.get("password") as string
     };
 
