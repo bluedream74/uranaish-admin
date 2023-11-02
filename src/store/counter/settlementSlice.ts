@@ -23,6 +23,7 @@ export const getSettlementList = createAsyncThunk(
 export interface UpdateSettlementType {
   id: number;
   status: number;
+  price: number;
 }
 
 export const updateSettlementStatus = createAsyncThunk(
@@ -63,6 +64,7 @@ export const settlementSlice = createSlice({
             {
               ...settlement,
               status: action.payload.status,
+              price: action.payload.price,
               update_at: new Date(action.payload.update_at)
             } :
             settlement
@@ -71,6 +73,7 @@ export const settlementSlice = createSlice({
       })
       .addCase(updateSettlementStatus.rejected, (state) => {
         state.status = "failed"
+        state.settlementList = [...state.settlementList]
       })
       .addCase(updateSettlementStatus.pending, (state) => {
         state.status = "loading"
