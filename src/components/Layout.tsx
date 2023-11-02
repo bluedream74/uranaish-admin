@@ -29,9 +29,8 @@ export default function Layout() {
                 }}
               />
             }
-            // component={<Link to="/" className="link" />}
           >
-            <Link to="/" className="text-[24px]">管理メニュー</Link>
+            <h2 className="text-[24px]" onClick={() => { navigate('/'); }}>管理メニュー</h2>
           </MenuItem>
           <MenuItem 
             icon={<AccountBalanceRoundedIcon />}

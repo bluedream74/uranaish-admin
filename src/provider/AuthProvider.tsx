@@ -1,6 +1,6 @@
 import AuthContext, { UserType } from "../context/AuthContext";
 import { useState } from "react";
-import axiosApi from "../utils/axios";
+import axiosApi, { axiosTokenApi } from "../utils/axios";
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserType>({
@@ -51,7 +51,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     }
 
     const resetUserAndTokens = () => {
-      console.log('adsf');
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       setUser({
@@ -64,7 +63,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       access_token: access_token
     };
 
-    return axiosApi
+    return axiosTokenApi
       .post(`account/api/check_token/`, payload)
       .then(res => {
         setUser({
@@ -74,11 +73,11 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         return true;
       })
       .catch(err => {
-        if (err.response && err.response.status === 408) {
+        if (err.response && err.response.status !== 403) {
           axiosApi
             .post(`account/api/login/refresh/`, { refresh_token })
             .then(res => {
-              axiosApi
+              axiosTokenApi
                 .post(`account/api/check_token/`, {access_token: res.data.access_token})
                 .then(res => {
                   setUser({
