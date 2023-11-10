@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosTokenApi } from "../../utils/axios";
 import { SettlementType } from "../../pages/Settlement";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface SettlementSliceType {
   settlementList: SettlementType[];
@@ -38,6 +39,9 @@ export const settlementSlice = createSlice({
   name: 'settlement',
   initialState,
   reducers: {
+    changeStatus: (state, action: PayloadAction<"idle" | "failed" | "loading">) => {
+      state.status = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getSettlementList.fulfilled, (state, action) => {
@@ -80,5 +84,7 @@ export const settlementSlice = createSlice({
       })
   },
 });
+
+export const { changeStatus } = settlementSlice.actions
 
 export default settlementSlice.reducer;

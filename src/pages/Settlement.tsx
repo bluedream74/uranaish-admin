@@ -17,6 +17,7 @@ import {
 } from '@mui/x-data-grid';
 import { useAppSelector, useAppDispatch } from '../store';
 import { getSettlementList, updateSettlementStatus, UpdateSettlementType } from '../store/counter/settlementSlice';
+import AlertDialog from '../components/AlertDialog';
 
 export interface SettlementType {
   id: number
@@ -139,19 +140,22 @@ const Settlement = () => {
   ];
 
   return(
-    <Box className="w-full m-3">
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        localeText={jaJP.components.MuiDataGrid.defaultProps.localeText}
-        pageSizeOptions={[25, 50, 100, 200]}
-      />
-    </Box>
+    <>
+      <AlertDialog />
+      <Box className="w-full m-3">
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={handleRowModesModelChange}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          localeText={jaJP.components.MuiDataGrid.defaultProps.localeText}
+          pageSizeOptions={[25, 50, 100, 200]}
+        />
+      </Box>
+    </>
   );
 };
 
